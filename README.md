@@ -18,28 +18,31 @@ A sleek, native macOS application built with SwiftUI to help you track your fina
 
 ## Installation and Usage
 
-### Option 1: Using Xcode (Recommended)
+### Option 1: Going to the releases tab and downloading from there.
+
+
+### Option 2: Using Xcode (Recommended for devs)
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/nzc0der/SavingsTrack.git
+   cd SavingsTrack
    ```
 2. **Open the Project**:
-   Double-click the `SavingsTracker` folder or use `open .` and Xcode should recognize the Swift Package. Alternatively, if you've created an `.xcodeproj`, open that.
+   Double-click the `SavingsTrack` folder or use `open .` and Xcode should recognize the Swift Package. Alternatively, if you've created an `.xcodeproj`, open that.
 3. **Select Target**:
    Ensure the `SavingsTracker` scheme is selected in the top bar.
 4. **Run**:
    Press `Cmd + R` to build and run the application.
 
-### Option 2: Without Xcode (Command Line)
+### Option 3: Without Xcode (Command Line)
 
 If you have the Swift toolchain installed (comes with Xcode Command Line Tools), you can build and run using the Swift Package Manager.
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/nzc0der/SavingsTrack.git
+   cd SavingsTrack
    ```
 2. **Build the Project**:
    ```bash
