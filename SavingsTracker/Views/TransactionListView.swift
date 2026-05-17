@@ -3,32 +3,42 @@ import SwiftUI
 struct TransactionListView: View {
     @ObservedObject var viewModel: SavingsViewModel
     @State private var showingAddTransaction = false
+    @State private var searchText = ""
+
+    var filteredTransactions: [Transaction] {
+        if searchText.isEmpty {
+            return viewModel.transactions.sorted(by: { $0.date > $1.date })
+        } else {
+            return viewModel.transactions.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+                .sorted(by: { $0.date > $1.date })
+        }
+    }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             List {
-                ForEach(viewModel.transactions.sorted(by: { $0.date > $1.date })) { transaction in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(transaction.title)
-                                .font(.headline)
-                            Text(transaction.date, style: .date)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                        Spacer()
-                        Text("\(transaction.type == .income ? "+" : "-") $\(transaction.amount, specifier: "%.2f")")
-                            .foregroundColor(transaction.type == .income ? .green : .red)
-                            .fontWeight(.semibold)
-                    }
+                ForEach(filteredTransactions) { transaction in
+                    TransactionRow(transaction: transaction)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .background(Color(NSColor.controlBackgroundColor))
+                        .cornerRadius(10)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal)
                 }
                 .onDelete(perform: deleteTransactions)
             }
+            .listStyle(PlainListStyle())
         }
         .navigationTitle("Transactions")
+        .searchable(text: $searchText, prompt: "Search transactions...")
         .toolbar {
-            Button(action: { showingAddTransaction.toggle() }) {
-                Image(systemName: "plus")
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: { showingAddTransaction.toggle() }) {
+                    Label("Add Transaction", systemImage: "plus")
+                }
             }
         }
         .sheet(isPresented: $showingAddTransaction) {
